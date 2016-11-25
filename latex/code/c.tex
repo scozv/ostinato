@@ -1,0 +1,32 @@
+\section{The C Programming Language}
+书籍对应\citec{B.W.Kernighan:1988}和对应的汉译本。
+
+% C 中文2新版, 所有的页码以Reader为准
+\begin{lstlisting}
+// C中的所有字符都对应一个int，“但由于潜在原因，我们选用int”（页10）
+int c;
+
+c = getchar();
+while (c!=EOF) {
+  putchar(c);
+  c = getchar();
+}
+\end{lstlisting}
+
+在C中，赋值操作是一个表达式——具有一个值，所以：
+\begin{lstlisting}
+int c;
+
+while ((c=getchar()) != EOF) {
+  putchar(c);
+}
+\end{lstlisting}
+P12
+long至少占32位，某些机器上int和long的长度相同，
+但有些机器的int只有16位[-32768~32767]。
+double可以处理更大的数，可以使用\cd{"\%.0f"}只打印整数部分。
+
+P19 C1.8参数
+在C中，所有函数参数都是ByValue传递的——也就是说，
+The value passed into function as parameter is stored in temporary variable, 
+not in the previous variable before function calling.

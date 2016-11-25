@@ -1,0 +1,137 @@
+\documentclass[a4paper]{book}
+
+% shortcut for scotv's github homepage
+\usepackage{hyperref}
+\newcommand{\scotv}{https://github.com/scozv}
+% wikipedia shortcut, it means ref to wikipedia
+\newcommand{\Wk}{\emph{[W]}}
+\newcommand{\Iw}[1]{\href{http://www.investopedia.com/#1}{\emph{[I]}}}
+
+% shortcut for \ding{213}
+\newcommand{\To}{\ding{213}}
+
+\usepackage{listings, color}
+% shortcut for inline code snippet, like `code` in markdown
+% \newcommand{\cd}[1]{\colorbox[rgb]{0.86,0.86,0.86}{\lstinline$#1$}}
+\newcommand{\cd}[1]{\lstinline$#1$}
+
+% shortcut for section, subsection, subsubsection
+% mb stands for member
+\newcommand{\mb}[1]{\subsection*{#1}}
+\newcommand{\mmb}[1]{\subsubsection*{#1}}
+
+% set style for multiple lines code snippet
+\lstset{numbers=left, numberstyle=\tiny
+	, stepnumber=2, numbersep=5pt
+	, backgroundcolor=\color[rgb]{0.86,0.86,0.86}
+	, basicstyle=\footnotesize\ttfamily
+	, breaklines=true}
+
+% set index
+\usepackage{multind}
+\makeindex{idx_finance}
+\newcommand{\idxf}[1]{\index{idx_finance}{#1}}
+% heading
+\setcounter{secnumdepth}{3}
+
+% set multi-ref
+\usepackage{multibib}
+\newcommand{\bibnamec}{References of Programming}
+\newcites{c}{\bibnamec}
+\newcommand{\bibnamef}{References of Finance}
+\newcites{f}{\bibnamef}
+
+% CJK for XeTeX
+% http://www.ctan.org/pkg/xetexref
+% https://zh.wikipedia.org/wiki/XeTeX
+% http://ctan.org/pkg/xecjk
+\usepackage{xltxtra, xeCJK}
+\setCJKmainfont[BoldFont=Adobe Heiti Std]{Adobe Song Std}
+\xeCJKsetup{AutoFakeBold=true, CJKmath=true}
+
+% Latin
+\usepackage{fontspec, pifont}
+\setmainfont{Gentium Book Basic} %[ItalicFont=Gentium Book Basic Bold]
+
+% intertext, trigleq and proof
+\usepackage{amsmath, amssymb, amsthm}
+
+% bold emphasized text
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+% tiny margin note
+\makeatletter
+  \long\def\@ympar#1{%
+  \@savemarbox\@marbox{\small #1}%
+  \global\setbox\@currbox\copy\@marbox
+  \@xympar}
+\makeatother
+
+% reduce the space of itemize
+\newlength{\wideitemsep}%
+\setlength{\wideitemsep}{.5\itemsep}%
+\addtolength{\wideitemsep}{-7pt}%
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+
+\begin{document}
+\title{Dola, A Template for Documentation}
+\author{Scott, LIU}
+\date{Sept, 18, 2016}
+\maketitle
+
+\chapter*{\centering \begin{normalsize}Abstract\end{normalsize}}
+\begin{quotation}
+\noindent % abstract text
+This a ultimate notes collection of anything, including:
+
+\begin{itemize}
+  \item Mathmatics,
+  \item Finance,
+  \item Programming,
+  \item Arts
+  \item \ldots{}
+\end{itemize}
+\end{quotation}
+\clearpage
+
+% no indent of second ... paragraphs of each section
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\part{Arts}
+  \chapter{Classic Music}
+    \include{arts/mzk_yale}
+\part{Programming}
+  \chapter{C Programming}
+    \include{code/c}
+
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamec}
+  \bibliographystylec{GBT7714-2005NLang}
+  \bibliographyc{code/ref}
+\part{Finance}
+  \makeatletter
+  % Put section depth at the same level as \chapter.
+  \renewcommand*{\toclevel@section}{0}
+  \printindex{idx_finance}{Index of Finance}
+  % Put section depth back to its default value.
+  \renewcommand*{\toclevel@section}{1}
+  \makeatother
+
+  \cleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\bibnamef}
+  \bibliographystylef{GBT7714-2005NLang}
+  \bibliographyf{finance/ref}
+
+\appendix
+\part{Appendix}
+\chapter{Finance}
+\include{finance/app_VaR_proof}
+\include{finance/app_duration_convexity_proof}
+\end{document}

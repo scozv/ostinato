@@ -1,0 +1,163 @@
+\section{Proof of VaR}
+\subsection{满足正态分布的收益率的VaR}
+假定期初资产投资额为$S$，一定时期$t$內的收益率$r$
+服从正态分布$N(\mu, \sigma^2)$，则置信水平$\alpha$下的风险价值为：
+\marginpar{课堂上的含$\Phi^{-1}(\alpha)$的公式是错误的，随后证明}
+\[\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(1-\alpha)] \]
+\subsection{理解和证明}
+通常的，在时期$t$内的置信度是一个
+较大（$>50\%$）的数，比如$99\%$，我们想要表达的
+语言是：
+
+\emph{在时期$t$内，有$1-\alpha$的可能性，使我们的损失
+超过$\text{VaR}$}
+
+\marginpar{文献\citef{J.C.Hall:2001}给出了损失的
+两种字面表达方式：
+收益曲线中的负收益，损失曲线中的正损失，一个意思，
+我们更希望用数学语言表示}
+
+令$S$为资产期初值，期间收益率$r$，则期末资产的价值$W$：
+\[ W=S(1+r)\]
+于是期间内资产的变化值$\Delta p$（正值为收益，负值为损失）:
+\[ \Delta p = W-S=S(1+r)-S=S\cdot r\]
+特别注意，上述等式中，\emph{$r$是随机变量}，满足一定的概率分布，
+$\Delta p=S\cdot r$是随机变量的函数，也是一个随机变量。
+如果$r$服从$N(\mu, \sigma^2)$的正态分布，
+则$\Delta p = S\cdot r$服从$N(S\mu, S^2 \sigma^2)$的正态分布，
+
+我们约定，价值$\text{VaR}$是一个非负数（$\text{VaR}\geq 0$），
+当我们说“损失超过$\text{VaR}$”的时候，对应的数学语言是：
+\[ |\Delta p| \geq \text{VaR}, (\Delta p \leq 0) \]
+
+基于这些记号（Notation），上面的VaR描述的更精确定义为：
+\begin{equation}
+  P(|\Delta p| \geq \text{VaR}) = 1-\alpha, (\Delta p \leq 0)
+\end{equation}
+
+下面就是推导这个式子，
+假定$r\sim N(\mu, \sigma^2), \Delta p = S\cdot r$：
+
+\begin{align*}
+\intertext{已知：}
+&P(|\Delta p| \geq \text{VaR}) = 1-\alpha \\
+\intertext{其中$\Delta p \leq 0$ 并且$\text{VaR} \geq 0 $}
+\Rightarrow &P(-\Delta p \geq \text{VaR}) = 1-\alpha \\
+\intertext{变化一下随机变量$\Delta p$ 的符号}
+\Rightarrow &P(\Delta p \leq -\text{VaR}) = 1-\alpha \\
+\intertext{我们已经说过$\Delta p\triangleq Sr$：}
+\Rightarrow &P(r \leq -\frac{\text{VaR}}{S}) = 1-\alpha \\
+\intertext{已知$r\sim N(\mu, \sigma^2)$，将其标准化：}
+\Rightarrow &P(\frac{r-\mu}{\sigma} \leq \frac{-\frac{\text{VaR}}{S}-\mu}{\sigma}) = 1-\alpha \\
+\intertext{根据标准正态分布的定义和性质：}
+\Rightarrow &\Phi(\frac{-\frac{\text{VaR}}{S}-\mu}{\sigma}) = 1-\alpha \\
+\Rightarrow &\Phi^{-1}(1-\alpha) = \frac{-\frac{\text{VaR}}{S}-\mu}{\sigma} \\
+\intertext{整理方程，求解$\text{VaR}$：}
+\Rightarrow &\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(1-\alpha)] \\
+\intertext{根据标准正态分布累计密度函数$\Phi(x)$的性质：}
+\Rightarrow &\text{VaR} = -S[\mu - \sigma \cdot \Phi^{-1}(\alpha)]
+\end{align*}
+
+\subsection{额外的证明}
+\begin{proof}[$\Phi^{-1}(1-\alpha)=-\Phi^{-1}(\alpha)$]
+\begin{align*}
+\intertext{由标准正态分布概率密度函数的图像对称性：}
+&\alpha \triangleq \Phi(x_0) \\
+\Rightarrow & \alpha = 1-\Phi(-x_0) \\
+\Rightarrow &
+     \left\{  \begin{array}{l}
+     \Phi(x_0) = \alpha \\
+     \Phi(-x_0) = 1-\alpha
+    \end{array}  \right. \\
+\Rightarrow &
+     \left\{  \begin{array}{l}
+     \Phi^{-1}(\alpha) = x_0 \\
+     \Phi^{-1}(1-\alpha) = -x_0
+    \end{array}  \right. \\
+\Rightarrow & 
+  \Phi^{-1}(1-\alpha)=-\Phi^{-1}(\alpha) \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{两个说明}
+\begin{enumerate}
+  \item 课堂上给出的公式为什么是：$\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(\alpha)]$？
+	
+	这个公式是错误的，如果使用文献\citef{J.C.Hall:2001}第9章的例9.1验证（验证过程随后给出），
+	会发现该公式的计算结果和文献的结果不一致，但是本节推导出来
+	的公式可以求得正确的VaR值；
+  \item 为什么课堂上的例子$\text{VaR}=-120 \times 1000 \times (-1.65) \times 2\%$ 可以套用错误的公式？
+	
+	因为这个例子中恰好$\mu =0$ ，图像相对于纵轴是对称的。需要注意的是
+	$-1.65$不是计算的$\Phi^{-1}(\alpha)$，然后添加一个负号，让VaR取正。
+	$-1.65$计算的是$\Phi^{-1}(1-\alpha)$，课堂上有同学提出的疑问是有道理的。
+\end{enumerate}
+
+\subsection{公式验证}
+文献\citef{J.C.Hall:2001}第9章的例9.1如是说：
+
+\begin{quote}
+Suppose that the gain from a portfolio during six months is normally distributed with
+a mean of $\$2$ million and a standard deviation of $\$10$ million. From the properties of
+the normal distribution, the one-percentile point of this distribution is $2 − 2.33 × 10$
+or $–\$21.3$ million. The VaR for the portfolio with a time horizon of six months and
+confidence level of $99\%$ is therefore $\$21.3$ million.
+\end{quote}
+
+课件上给出的公式是$\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(\alpha)]$，根据题意：
+\begin{align*}
+S &\triangleq 1 \\
+\mu &= 2 \text{ million} \\
+\sigma & = 10 \text{ million} \\
+\alpha & = 99\% \\
+\intertext{代入课件的公式：}
+\text{VaR} &= -1\cdot [2 + 10 \cdot \Phi^{-1}(99\%)] \\
+\intertext{查表(\citef{GB4086.1:83})得$\Phi^{-1}(99\%) \approx 2.33$：}
+\Rightarrow \text{VaR} &= -1\cdot [2 + 10 \times 2.33] = -25.3 
+\end{align*}
+
+这个结果不等于例9.1的计算结果。
+
+\subsection{$\Delta p \triangleq -Sr$对公式的影响}
+接下来会证明，即使定义$\Delta p \triangleq -Sr$，课件中给的公式依然有问题。
+
+回顾文字定义：\emph{在时期$t$内，有$1-\alpha$的可能性，使我们的损失
+超过$\text{VaR}$}。
+
+如果将风险价值定义为期初值减去期末值，也就是
+$\text{VaR} \triangleq S - S(1+r) = -Sr$，我们默认地\emph{将VaR看成了一个负值}，
+当我们有正的收益的时候，$\Delta p = -Sr$应该是一个负值，所以，当我们再来说
+损失的时候，我们又默认地假定了$\Delta p \geq 0$。
+
+这两个默认假定对我们的证明非常重要，因为，对应的数学定义变成了：
+\begin{align*}
+  &\Delta p \triangleq -Sr \\
+  \intertext{其中$S > 0, r \sim N(\mu, \sigma^2)$}
+  &P(|\Delta p| \geq |\text{VaR}|) = 1-\alpha, (\Delta p \geq 0, \text{VaR} \leq 0)\\
+  \intertext{展开绝对值，注意符号：}
+  &P(\Delta p \geq -\text{VaR}) = 1-\alpha\\
+  \Rightarrow &P(-Sr\geq -\text{VaR}) = 1-\alpha \\
+  \Rightarrow &P(Sr\leq \text{VaR}) = 1-\alpha \\
+  \Rightarrow &P(r\leq \frac{\text{VaR}}{S}) = 1-\alpha, (S > 0) \\
+  \Rightarrow &\Phi(\frac{\frac{\text{VaR}}{S}-\mu}{\sigma}) = 1-\alpha \\
+  \Rightarrow &\Phi^{-1}(1-\alpha) = \frac{\frac{\text{VaR}}{S}-\mu}{\sigma} \\
+  \Rightarrow &\text{VaR} = S\left[\mu+\sigma\cdot\Phi^{-1}(1-\alpha)\right] \\
+  \intertext{根据$\Phi^{-1}(1-\alpha)=-\Phi^{-1}(\alpha)$：}
+  \Rightarrow &\text{VaR} = S\left[\mu-\sigma\cdot\Phi^{-1}(\alpha)\right] \\
+\end{align*}
+
+代入例9.1的数据，得出VaR是一个负值，这符合我们对VaR的假设。
+同时这个公式也指出了课件的公式$\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(\alpha)]$是错误的。
+
+总结一下，不管如何假设$\Delta p$的正负号定义，本节推导出来了两个公式：
+\begin{align*}
+\text{VaR} &= -S[\mu - \sigma \cdot \Phi^{-1}(\alpha)] \\
+\text{VaR} &= S\left[\mu-\sigma\cdot\Phi^{-1}(\alpha)\right]
+\end{align*}
+
+课件给出的公式是：
+\begin{equation*}\text{VaR} = -S[\mu + \sigma \cdot \Phi^{-1}(\alpha)]\end{equation*}
+
+它们之间的区别不在于$S$和$-S$的区别，而在于$\sigma \cdot \Phi^{-1}(\alpha)$前面的符号。
+课堂上给出的期权VaR的例子，VaR计算结果的绝对值之所以能够满足所有的等式，原因是题目给出的
+平均值$\mu$是零。
