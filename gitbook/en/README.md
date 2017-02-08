@@ -1,3 +1,3 @@
-# Dola Overview
+# Ostinato Overview
 
-Dola, is just a name of documentation template with `Gitbook`.
+Ostinato, is just a name of documentation template with `Gitbook`.

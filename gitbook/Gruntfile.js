@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 		'gitbook': {
 			development: {
 				input: "./"
-				,github: "scozv/dola"
+				,github: "scozv/ostinato_404"
 			}
 		},
 		'gh-pages': {

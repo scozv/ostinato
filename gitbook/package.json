@@ -1,8 +1,8 @@
 {
-  "name": "dola",
+  "name": "ostinato",
   "private": true,
   "version": "3.1.4",
-  "description": "Sources of Dola Template",
+  "description": "Sources of Ostinato Template",
   "dependencies": {},
   "devDependencies": {
     "gitbook-plugin-yametrika": "^1.6.6",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/scozv/dola.git"
+    "url": "git://github.com/scozv/ostinato.git"
   },
   "keywords": [
     "gitbook",
@@ -27,7 +27,7 @@
   "author": "Scott LIU",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/scozv/dola/issues"
+    "url": "https://github.com/scozv/ostinato/issues"
   },
-  "homepage": "https://github.com/scozv/dola"
+  "homepage": "https://github.com/scozv/ostinato"
 }

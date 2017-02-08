@@ -1,6 +1,6 @@
 {
 	"gitbook": ">=2.0.0",
-	"title": "Dola文档模板",
+	"title": "Ostinato文档模板",
 	"language": "zh-cn",
   "plugins": ["yametrika", "katex", "-mixpanel", "-quizzes", "-exercises","-mathjax"],
 	"pluginsConfig": {

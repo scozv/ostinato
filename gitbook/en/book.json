@@ -1,6 +1,6 @@
 {
 	"gitbook": ">=2.0.0",
-	"title": "Dola Template",
+	"title": "Ostinato Template",
 	"language": "en",
   "plugins": ["yametrika", "katex", "-mixpanel", "-quizzes", "-exercises","-mathjax"],
 	"pluginsConfig": {
